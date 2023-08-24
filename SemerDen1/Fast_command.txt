@@ -1,0 +1,12 @@
+set term pngcairo size 1200, 800 font "Times,14 " linewidth 4
+set logscale x
+set logscale y
+set output "1.png"
+plot "Time.txt" index 0 u 1:2 t "selectionSort" with linespoints pt 4, \
+ "Time.txt" index 1 u 1:2 t "shellSort" with linespoints pt 4,\
+ "Time.txt" index 2 u 1:2 t "bubbleSort" with linespoints pt 4,\
+ "Time.txt" index 3 u 1:2 t "insertSort" with linespoints pt 4,\
+ "Time.txt" index 4 u 1:2 t "heapSort" with linespoints pt 4, \
+ "Time.txt" index 5 u 1:2 t "gnomeSort" with linespoints pt 4,\
+ "Time.txt" index 6 u 1:2 t "quickSort" with linespoints pt 4,\
+ "Time.txt" index 7 u 1:2 t "mergeSort" with linespoints pt 4
