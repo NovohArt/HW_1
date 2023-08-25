@@ -20,40 +20,25 @@ void print(int* b, int size) {
 
 void heapify(int arr[], int n, int i)
 {
-    int largest = i; // Initialize largest as root Since we are using 0 based indexing
-    int l = 2 * i + 1; // left = 2*i + 1
-    int r = 2 * i + 2; // right = 2*i + 2
-
-    // If left child is larger than root
+    int largest = i; 
+    int l = 2 * i + 1; 
+    int r = 2 * i + 2; 
     if (l < n && arr[l] > arr[largest])
         largest = l;
-
-    // If right child is larger than largest so far
     if (r < n && arr[r] > arr[largest])
         largest = r;
-
-    // If largest is not root
     if (largest != i) {
         swap(arr[i], arr[largest]);
-
-        // Recursively heapify the affected sub-tree
         heapify(arr, n, largest);
     }
 }
 
-// main function to do heap sort
 void heapSort(int arr[], int n)
 {
-    // Build heap (rearrange array)
     for (int i = n / 2 - 1; i >= 0; i--)
         heapify(arr, n, i);
-
-    // One by one extract an element from heap
     for (int i = n - 1; i >= 0; i--) {
-        // Move current root to end
         swap(arr[0], arr[i]);
-
-        // call max heapify on the reduced heap
         heapify(arr, i, 0);
     }
 }
@@ -63,12 +48,8 @@ void merge(int array[], int const left, int const mid,
 {
     auto const subArrayOne = mid - left + 1;
     auto const subArrayTwo = right - mid;
-
-    // Create temp arrays
     auto* leftArray = new int[subArrayOne],
         * rightArray = new int[subArrayTwo];
-
-    // Copy data to temp arrays leftArray[] and rightArray[]
     for (auto i = 0; i < subArrayOne; i++)
         leftArray[i] = array[left + i];
     for (auto j = 0; j < subArrayTwo; j++)
@@ -80,8 +61,6 @@ void merge(int array[], int const left, int const mid,
         = 0; // Initial index of second sub-array
     int indexOfMergedArray
         = left; // Initial index of merged array
-
-    // Merge the temp arrays back into array[left..right]
     while (indexOfSubArrayOne < subArrayOne
         && indexOfSubArrayTwo < subArrayTwo) {
         if (leftArray[indexOfSubArrayOne]
@@ -97,16 +76,12 @@ void merge(int array[], int const left, int const mid,
         }
         indexOfMergedArray++;
     }
-    // Copy the remaining elements of
-    // left[], if there are any
     while (indexOfSubArrayOne < subArrayOne) {
         array[indexOfMergedArray]
             = leftArray[indexOfSubArrayOne];
         indexOfSubArrayOne++;
         indexOfMergedArray++;
     }
-    // Copy the remaining elements of
-    // right[], if there are any
     while (indexOfSubArrayTwo < subArrayTwo) {
         array[indexOfMergedArray]
             = rightArray[indexOfSubArrayTwo];
@@ -117,9 +92,6 @@ void merge(int array[], int const left, int const mid,
     delete[] rightArray;
 }
 
-// begin is for left index and end is
-// right index of the sub-array
-// of arr to be sorted */
 void mergeSort(int array[], int const begin, int const end)
 {
     if (begin >= end)
@@ -134,13 +106,11 @@ void mergeSort(int array[], int const begin, int const end)
 int partition(int* arr, int first, int last) {
     int i = first, j = last;
     int pivot = arr[(first + last) / 2];
-
     while (true) {
         while (arr[i] < pivot)
             i++;
         while (arr[j] > pivot)
             j--;
-
         if (i >= j)
             break;
         int temp = arr[i];
@@ -151,6 +121,7 @@ int partition(int* arr, int first, int last) {
     }
     return j;
 }
+
 void quickSort(int* arr, int first, int last) {
     if (first < last) {
         int p = partition(arr, first, last);
@@ -160,24 +131,13 @@ void quickSort(int* arr, int first, int last) {
 }
 
 
-void shellSort(int arr[], int n)
-{
-    for (int gap = n / 2; gap > 0; gap /= 2)
-    {
-
-        for (int i = gap; i < n; i += 1)
-        {
-            // add a[i] to the elements that have been gap sorted
-            // save a[i] in temp and make a hole at position i
+void shellSort(int arr[], int n){
+    for (int gap = n / 2; gap > 0; gap /= 2) {
+        for (int i = gap; i < n; i += 1)  {
             int temp = arr[i];
-
-            // shift earlier gap-sorted elements up until the correct
-            // location for a[i] is found
             int j;
             for (j = i; j >= gap && arr[j - gap] > temp; j -= gap)
                 arr[j] = arr[j - gap];
-
-            // put temp (the original a[i]) in its correct location
             arr[j] = temp;
         }
     }
@@ -221,21 +181,12 @@ void gnomeSort(int arr[], int n)
 void selectionSort(int arr[], int size)
 {
     int i, j, minIndex;
-    // loop to iterate over the entire array
     for (i = 0; i < size - 1; i++)
     {
-        // set minIndex equal to the first unsorted element
         minIndex = i;
-
-        //iterate over unsorted sublist
         for (j = i + 1; j < size; j++)
-
-            // helps in finding the minimum element
             if (arr[j] < arr[minIndex])
                 minIndex = j;
-
-        // swapping the minimum element with the element at minIndex to place it at its correct position 
-        // using std::swap() method for swapping
         swap(arr[minIndex], arr[i]);
     }
 }
@@ -257,7 +208,7 @@ int main() {
             sorts[sort](arr, size);
             auto end = std::chrono::high_resolution_clock::now();
             if (chrono::duration_cast<chrono::seconds>(end - start).count() < 20) {
-                if (chrono::duration_cast<chrono::seconds>(end - start).count() > 1)
+                if (chrono::duration_cast<chrono::microseconds>(end - start).count() < 1)
                     fout << size << ' ' << 1 << endl;
                 else
                     fout << size << ' ' << chrono::duration_cast<chrono::microseconds>(end - start).count() << endl;
@@ -285,7 +236,7 @@ int main() {
             sorts2[sort2](arr, 0, size-1);
             auto end = std::chrono::high_resolution_clock::now();
             if (chrono::duration_cast<chrono::seconds>(end - start).count() < 20) {
-                if (chrono::duration_cast<chrono::seconds>(end - start).count() > 1)
+                if (chrono::duration_cast<chrono::microseconds>(end - start).count() < 1)
                     fout << size << ' ' << 1 << endl;
                 else
                     fout << size << ' ' << chrono::duration_cast<chrono::microseconds>(end - start).count() << endl;
@@ -304,4 +255,3 @@ int main() {
     fout.close();
     return 0;
 }
-
