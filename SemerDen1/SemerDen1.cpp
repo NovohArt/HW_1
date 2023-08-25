@@ -56,11 +56,11 @@ void merge(int array[], int const left, int const mid,
         rightArray[j] = array[mid + 1 + j];
 
     auto indexOfSubArrayOne
-        = 0, // Initial index of first sub-array
+        = 0, 
         indexOfSubArrayTwo
-        = 0; // Initial index of second sub-array
+        = 0; 
     int indexOfMergedArray
-        = left; // Initial index of merged array
+        = left; 
     while (indexOfSubArrayOne < subArrayOne
         && indexOfSubArrayTwo < subArrayTwo) {
         if (leftArray[indexOfSubArrayOne]
@@ -95,7 +95,7 @@ void merge(int array[], int const left, int const mid,
 void mergeSort(int array[], int const begin, int const end)
 {
     if (begin >= end)
-        return; // Returns recursively
+        return; 
 
     auto mid = begin + (end - begin) / 2;
     mergeSort(array, begin, mid);
